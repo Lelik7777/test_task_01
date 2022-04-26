@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {AppBar, Container, IconButton, LinearProgress, Typography} from '@material-ui/core';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate, NavLink, Route, Routes} from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import {Login} from './ui/login/Login';
 import {UsersList} from './ui/UsersList';
@@ -37,7 +37,9 @@ function App() {
                     </Typography>
                     {isAuth
                     ?<Button color="inherit" onClick={handleLogout}>Logout</Button>
-                    :<Button color="inherit" >Login</Button>
+                    :<Button color="inherit" >
+                            <NavLink to={'/login'} style={{color:'white',textDecoration:'none'}}>Login</NavLink>
+                    </Button>
                     }
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
