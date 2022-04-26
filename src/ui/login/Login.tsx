@@ -13,8 +13,11 @@ import Typography from '@mui/material/Typography';
 import {colorBlueMI, fontSizeButtonAuth, redStyle} from '../../utilities/for styles';
 import {Visibility, VisibilityOff} from '@material-ui/icons';
 import {useFormik} from 'formik';
-import {RootStateType} from '../../bll/store';
+import {RootStateType, useAppDispatch} from '../../bll/store';
 import s from './Login.module.css';
+import {setLoginT} from '../../bll/reducers/loginReducer';
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
 
 type State = {
     password: string;
@@ -22,7 +25,7 @@ type State = {
     email: string;
 }
 export const Login = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [values, setValues] = useState<State>({
         password: '',
         showPassword: false,
@@ -54,7 +57,8 @@ export const Login = () => {
             email: Yup.string().email('Invalid email address').required('Required'),
         }),
         onSubmit: values => {
-            /*  dispatch(setLogin(values))*/
+
+            dispatch(setLoginT(values));
             formik.resetForm();
         },
     });
@@ -77,12 +81,12 @@ export const Login = () => {
                     backgroundColor: 'whitesmoke',
                 }}
             >
-                <Grid container justifyContent={'center'}  sx={{margin: 'auto'}}>
+                <Grid container justifyContent={'center'} sx={{margin: 'auto'}}>
                     <Grid container justifyContent={'center'} alignItems={'center'}>
                         <form onSubmit={formik.handleSubmit}>
 
                             <FormLabel sx={{marginBottom: 5}}>
-                                <h2 style={{textAlign:'center'}}>Sign In</h2>
+                                <h2 style={{textAlign: 'center'}}>Sign In</h2>
                             </FormLabel>
                             <FormControl>
                                 <InputLabel htmlFor="email">Email</InputLabel>
@@ -95,7 +99,7 @@ export const Login = () => {
                                     ? <div style={redStyle}>{formik.errors.email}</div>
                                     : null}
                             </FormControl>
-                            <div style={{height:'10px'}}></div>
+                            <div style={{height: '10px'}}></div>
                             <FormControl>
                                 <InputLabel htmlFor="password">Password</InputLabel>
                                 <Input

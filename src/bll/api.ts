@@ -19,12 +19,14 @@ export const loginAPI = {
         instance.post<RequestLoginType, AxiosResponse<ResponseLoginType<{ userId: number }>>>('/auth/login', data),
     getAuth: () =>
         instance.get<ResponseLoginType<{ id: number, email: string, login: string }>>('/auth/me'),
+    logout: () =>
+        instance.delete<ResponseLoginType>('/auth/login'),
 };
 
 export type RequestLoginType = {
     email: string;
     password: string;
-    rememberMe: boolean;
+    rememberMe?: boolean;
     captcha?: boolean;
 }
 export type ResponseLoginType<T = {}> = {
@@ -53,7 +55,8 @@ export type UserType = {
     };
     followed: boolean;
 }
- export enum ResultCode{
-    successful=0,
-    unsuccessful=1,
+
+export enum ResultCode {
+    successful = 0,
+    unsuccessful = 1,
 }
